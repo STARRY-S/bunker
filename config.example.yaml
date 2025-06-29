@@ -1,0 +1,39 @@
+bindAddr: 127.0.0.1
+listen: 8080
+
+certFile: certs/cert.pem
+keyFile: certs/cert.key
+
+insecureSkipTLSVerify: false
+
+routes:
+  - type: plainText
+    name: keep alive checker
+    remoteURL: ""
+    localURL: ""
+    path: /ping
+    plainText:
+      content: |
+          /pong
+      status: 200
+  - type: plainText
+    name: default block all access
+    remoteURL: ""
+    localURL: ""
+    prefix: /
+    plainText:
+      content: |
+          forbidden
+      status: 403
+  - type: default
+    name: route web1
+    remoteURL: https://web1.example.com
+    localURL: https://127.0.0.1:8081
+  - type: default
+    name: route web2
+    remoteURL: https://web2.example.com
+    localURL: https://127.0.0.1:8082
+  - type: default
+    name: route web3
+    remoteURL: https://web3.example.com
+    localURL: https://127.0.0.1:8083

@@ -20,16 +20,15 @@ RUN --mount=type=cache,target=/go/pkg/mod/ \
     go build \
     -buildmode=pie \
     -ldflags="-extldflags='-static' -s -w -X github.com/STARRY-S/bunker/pkg/utils.Version=${TAG} -X github.com/STARRY-S/bunker/pkg/utils.Commit=${COMMIT}" \
-    -o /usr/local/bin/proxy \
-    ./pkg/cmd
-RUN proxy version
+    -o /usr/local/bin/bunker \
+    .
+RUN bunker version
 
-FROM registry.suse.com/bci/python:3.12 AS server
+FROM registry.suse.com/bci/bci-base:15.7 AS server
 
-COPY --from=build /usr/local/bin/proxy /usr/local/bin/
+COPY --from=build /usr/local/bin/bunker /usr/local/bin/
 COPY config.example.yaml /config.yaml
-COPY static /static
 
-# Run Registry Reverse Proxy Server
-ENTRYPOINT [ "proxy" ]
+# Run Bunker Reverse Proxy Server
+ENTRYPOINT [ "bunker" ]
 CMD [ "run", "-c=/config.yaml" ]

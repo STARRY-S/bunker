@@ -18,21 +18,21 @@ jobs:
     runs-on: 'ubuntu-latest'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: GitHub Release
         uses: ./.github/actions/github-release
   image-build-amd64:
     runs-on: 'ubuntu-24.04'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Build Image
         uses: ./.github/actions/image-build
   image-build-arm64:
     runs-on: 'ubuntu-24.04-arm'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Build Image
         uses: ./.github/actions/image-build
   image-manifest:
@@ -40,6 +40,6 @@ jobs:
     runs-on: 'ubuntu-latest'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Image Manifest
         uses: ./.github/actions/image-manifest
